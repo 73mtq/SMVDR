@@ -199,7 +199,7 @@ if __name__ == '__main__':
     N_EPOCHS = 100
     DEPTH = 12
     HEAD = 9
-    BATCH_SIZE = 4
+    BATCH_SIZE = 2
     train_csv_path = os.path.join(DATA_PATH, 'train_rgb_label_newname.csv')
     assert os.path.exists(train_csv_path), '{} path is not exists...'.format(train_csv_path)
     test_csv_path = os.path.join(DATA_PATH, 'test_rgb_label_newname.csv')
@@ -241,8 +241,8 @@ if __name__ == '__main__':
     # train_dataset = MultiviewImgDataset_no_lesion(TRAIN_PATH, all_data, transform=transform_train)
     # valid_dataset = MultiviewImgDataset_no_lesion(TEST_PATH, test_df, transform=transform_test)
     # test_dataset = MultiviewImgDataset_no_lesion(TEST_PATH, test_df, transform=transform_test)
-    train_loader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=8, pin_memory=False)
-    valid_loader = DataLoader(valid_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=8, pin_memory=False)
-    test_loader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=8, pin_memory=False)
+    train_loader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=0, pin_memory=False)
+    valid_loader = DataLoader(valid_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=0, pin_memory=False)
+    test_loader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=0, pin_memory=False)
     print(len(train_dataset), len(valid_dataset), len(test_dataset))
     main(model_name=f'main_{LR}_{N_EPOCHS}_d{DEPTH}_h{HEAD}', N_EPOCHS=N_EPOCHS, LR=LR, depth=DEPTH, head=HEAD)

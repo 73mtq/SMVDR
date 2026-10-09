@@ -1,0 +1,51 @@
+# SMVDR 主环境依赖 + 病灶分割工具链
+#
+# 安装前置：先用 requirements-torch.txt 装好 torch 与 torchvision。
+# 安装：& $PY -m pip install -r repro\env\requirements-segmentation.txt
+#
+# 版本选择的依据：
+#   numpy==1.26.4     pandas 1.5.3 在 Python 3.11 下要求 numpy>=1.23.2，且不支持 numpy 2.x
+#   pandas==1.5.3     test.py:87 用了 roc_matrix.append()，DataFrame.append 在 pandas 2.0 被移除
+#   timm==1.0.30      model.py:7 需要 timm.models.layers 的 DropPath/trunc_normal_；
+#                     mamba.py:4 需要 timm.models.vision_transformer.Mlp
+#   mmcv-lite==2.2.0  model.py:11 引入 models/feature_visualization.py，该文件第 2 行是 import mmcv
+#   torchseg==0.0.1a4 病灶分割模型的架构实现，取自 github.com/isaaccorley/torchseg
+#
+# 三个包走 git 地址的来源：
+#   fundus-lesions-toolkit 在 PyPI 上的最新版是 0.1.0b0，那个版本走 segmentation_models_pytorch，
+#   权重放在 Google Drive，本机拿不到。GitHub main 分支走 torchseg + huggingface_hub，
+#   权重就在 HuggingFace 上，可以由 hf-mirror.com 下载。
+#   fundus-data-toolkit 没有发布到 PyPI。
+#
+# 末尾两行必须与上游声明逐字相同，不能补 @commit：
+#   fundus-lesions-toolkit 的 pyproject.toml 把依赖写成
+#     fundus-data-toolkit @ git+https://github.com/ClementPla/fundus-data-toolkit
+#     nntools @ git+https://github.com/ClementPla/NNTools@attrs_dataset
+#   pip 判断两个直接 URL 依赖是否指向同一个包，比较的是 URL 字符串本身
+#   （pip\_internal\models\link.py 的 links_equivalent 只忽略 query 与 fragment）。
+#   给这两行补上 @commit 会得到另一个 URL 字符串，pip 视为两个互相排斥的候选，
+#   直接报 ResolutionImpossible。fundus-lesions-toolkit 只在本文件里出现，可以带哈希固定。
+#
+# 安装当天这三个仓库解析到的 commit：
+#   fundus-lesions-toolkit c1cc42416285ee486ad04c298d6d418c57e7e147  refs/heads/main
+#   fundus-data-toolkit   a04db3cd28f0a95b950128cc3d0bbd781e8cace2  refs/heads/main
+#   NNTools               9ca4c48de01891a9af756a5e3b3d74c650e1cbfc  refs/heads/attrs_dataset
+
+numpy==1.26.4
+pandas==1.5.3
+opencv-python==4.10.0.84
+scikit-learn==1.5.2
+tqdm==4.66.5
+matplotlib==3.9.2
+Pillow==10.4.0
+einops==0.8.2
+timm==1.0.30
+mmcv-lite==2.2.0
+torchseg==0.0.1a4
+kornia==0.8.3
+kornia-rs==0.2.0
+safetensors==0.8.0
+huggingface_hub==2.2.0
+git+https://github.com/ClementPla/fundus-lesions-toolkit@c1cc42416285ee486ad04c298d6d418c57e7e147
+git+https://github.com/ClementPla/fundus-data-toolkit
+git+https://github.com/ClementPla/NNTools@attrs_dataset

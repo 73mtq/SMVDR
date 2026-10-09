@@ -1,0 +1,9 @@
+venv/
+.idea/
+__pycache__/
+*.pyc
+weights/
+best_smvdr.pth
+EYData_BaseEye_newdata/
+repro/_work/
+repro/_samples/

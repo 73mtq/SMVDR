@@ -195,7 +195,7 @@ if __name__ == '__main__':
     test_df = pd.read_csv(test_csv_path)
     test_dataset = MultiviewImgDataset_mask(TEST_PATH, MASK_PATH2, test_df, transform=transform_test, Single=False)
 
-    test_loader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=24, pin_memory=False)
+    test_loader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=0, pin_memory=False)
 
     # device = torch.device('cpu')
     model.to(device)

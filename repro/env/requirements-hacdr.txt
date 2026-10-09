@@ -1,0 +1,19 @@
+# HACDR-Net 训练环境（仅用于生成病灶掩膜，本次不执行）
+#
+# 版本选择的依据：
+#   HACDR-Net 仓库是 mmsegmentation 0.30.0 的完整分支（mmseg/version.py 为 0.30.0），
+#   需要 mmcv-full 1.6.2；该版本的 Windows wheel 只发布在
+#   https://download.openmmlab.com/mmcv/dist/cu116/torch1.12.0/
+#   且只有 cp37/cp38/cp39/cp310 四个版本。
+#
+# 因此本环境必须用 Python 3.10（不能用 3.11 或 3.12）。
+
+torch==1.12.0+cu116
+torchvision==0.13.0+cu116
+mmcv-full==1.6.2
+numpy==1.23.5
+opencv-python==4.8.1.78
+scikit-image
+matplotlib
+Pillow
+tqdm

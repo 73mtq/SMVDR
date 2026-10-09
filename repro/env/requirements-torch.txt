@@ -1,0 +1,10 @@
+# PyTorch 部分单独成文件：+cu121 是本地版本号，PyPI 上没有这些包，
+# 写进普通 requirements 文件会让 pip 去索引里找并失败，所以这里直接写 wheel 的 URL。
+#
+# 必须从 cu121 索引装：PyPI 上的默认 torch 是 CPU 版本，装完 torch.cuda.is_available() 会返回 False。
+# 官方索引 download.pytorch.org 在本机解析不了域名，阿里云镜像的文件与之完全相同。
+#
+# 安装：& $PY -m pip install -r repro\env\requirements-torch.txt
+
+https://mirrors.aliyun.com/pytorch-wheels/cu121/torch-2.4.1%2Bcu121-cp311-cp311-win_amd64.whl
+https://mirrors.aliyun.com/pytorch-wheels/cu121/torchvision-0.19.1%2Bcu121-cp311-cp311-win_amd64.whl
